@@ -50,7 +50,9 @@ export const RetentionTable: React.FC = () => {
     if (
       registrationDate &&
       lastActivityDate &&
-      registrationDate < lastActivityDate
+      registrationDate < lastActivityDate &&
+      registrationDate <= new Date() &&
+      lastActivityDate <= new Date()
     ) {
       const newField = { registrationDate: null, lastActivityDate: null };
 
