@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './Results.scss';
@@ -6,9 +6,11 @@ import './Results.scss';
 type ResultsProps = {};
 
 export const Results: React.FC<ResultsProps> = ({}) => {
-  const { calculationsDisplayed } = useSelector(
+  const { calculationsDisplayed, dataArray } = useSelector(
     (state: AppState) => state.appReducer
   );
+
+  const sevenDaysRetention = useMemo(() => {}, [dataArray]);
 
   return (
     <div className={`Results Results-displayed--${calculationsDisplayed}`}>

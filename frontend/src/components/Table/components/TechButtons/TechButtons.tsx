@@ -1,23 +1,26 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
 import './TechButtons.scss';
 
 import Button from '@material-ui/core/Button';
 
-import { setCalculationsDisplayed } from '../../../../redux/ducks/app';
+type TechButtonsProps = {
+  onCalc: () => void;
+  disabled: boolean;
+};
 
-type TechButtonsProps = {};
-
-export const TechButtons: React.FC<TechButtonsProps> = ({}) => {
-  const dispatch = useDispatch();
-
+export const TechButtons: React.FC<TechButtonsProps> = ({
+  onCalc,
+  disabled,
+}) => {
   return (
     <div className="TechButtons">
       <Button
         variant="outlined"
         color="primary"
         className="TechButtons__button TechButtons__button_calculate"
-        onClick={() => dispatch(setCalculationsDisplayed(true))}
+        onClick={onCalc}
+        disabled={disabled}
       >
         Calculate
       </Button>
@@ -25,6 +28,7 @@ export const TechButtons: React.FC<TechButtonsProps> = ({}) => {
         variant="outlined"
         color="secondary"
         className="TechButtons__button TechButtons__button_save"
+        disabled={disabled}
       >
         Save
       </Button>
