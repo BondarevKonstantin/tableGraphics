@@ -28,11 +28,11 @@ export const RetentionTable: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleInputChange = (
-    name: string,
+    name: RetentionDateField,
     date: Date | null,
     index: number
   ) => {
-    const rows: any = [...tableRows];
+    const rows: RetentionDate[] = [...tableRows];
     rows[index][name] = date;
     setTableRows(rows);
   };

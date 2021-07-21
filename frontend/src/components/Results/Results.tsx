@@ -6,16 +6,13 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   Bar,
   ResponsiveContainer,
 } from 'recharts';
 
 import './Results.scss';
 
-type ResultsProps = {};
-
-export const Results: React.FC<ResultsProps> = ({}) => {
+export const Results: React.FC = () => {
   const [lifeDurationData, setLifeDurationData] = useState([]);
 
   const { calculationsDisplayed, dataArray } = useSelector(
@@ -59,7 +56,7 @@ export const Results: React.FC<ResultsProps> = ({}) => {
 
       const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
 
-      const foundValue = lifeDurationDays.find((dataItem: any) => {
+      const foundValue = lifeDurationDays.find((dataItem: LifeDurationData) => {
         return dataItem.lifeDays === daysDiff;
       });
 
@@ -71,9 +68,11 @@ export const Results: React.FC<ResultsProps> = ({}) => {
     });
 
     setLifeDurationData(
-      lifeDurationDays.sort((dataItem: any, diffDataItem: any) => {
-        return dataItem.lifeDays - diffDataItem.lifeDays;
-      })
+      lifeDurationDays.sort(
+        (dataItem: LifeDurationData, diffDataItem: LifeDurationData) => {
+          return dataItem.lifeDays - diffDataItem.lifeDays;
+        }
+      )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataArray]);
