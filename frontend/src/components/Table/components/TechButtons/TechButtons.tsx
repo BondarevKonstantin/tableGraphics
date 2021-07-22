@@ -6,11 +6,15 @@ import Button from '@material-ui/core/Button';
 
 type TechButtonsProps = {
   onCalc: () => void;
+  onSave: () => void;
+  onGet: () => void;
   disabled: boolean;
 };
 
 export const TechButtons: React.FC<TechButtonsProps> = ({
   onCalc,
+  onSave,
+  onGet,
   disabled,
 }) => {
   return (
@@ -28,9 +32,18 @@ export const TechButtons: React.FC<TechButtonsProps> = ({
         variant="outlined"
         color="secondary"
         className="TechButtons__button TechButtons__button_save"
+        onClick={onSave}
         disabled={disabled}
       >
         Save
+      </Button>
+      <Button
+        variant="outlined"
+        color="default"
+        className="TechButtons__button TechButtons__button_get"
+        onClick={onGet}
+      >
+        Get from DB
       </Button>
     </div>
   );

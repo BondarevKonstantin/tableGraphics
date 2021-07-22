@@ -12,8 +12,9 @@ type RetentionDateField = 'registrationDate' | 'lastActivityDate'
 
 type AppReducerState = {
   dataArray: RetentionDate[]
-    calculationsDisplayed: boolean
-  };
+  calculationsDisplayed: boolean
+  error: boolean
+};
 
 type AppState = {
     appReducer: AppReducerState;

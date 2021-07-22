@@ -1,14 +1,18 @@
+import axios from 'axios'
+
 import { Reducer, ActionCreator } from 'redux';
-import { AppDispatch } from '../rootReducer';
 
 enum AppActionTypes {
     SET_CALCULATIONS_DISPLAYED = 'app/SET_CALCULATIONS_DISPLAYED',
-    SET_DATA_ARRAY = 'app/SET_DATA_ARRAY'
+    SET_DATA_ARRAY = 'app/SET_DATA_ARRAY',
+    LIST_USER_DATES = 'app/LIST_USER_DATES',
+    LIST_USER_DATES_FAIL = 'app/LIST_USER_DATES_FAIL',
 }
 
 const initialState: AppReducerState = {
   dataArray: null as any,
-  calculationsDisplayed: false
+  calculationsDisplayed: false,
+  error: false,
 };
 
 type setCalculationsDisplayedAction = {
@@ -33,6 +37,41 @@ export const setDataArray: ActionCreator<setDataArrayAction> = (payload: Retenti
   payload,
 })
 
+export const listUserDates = () => async (dispatch: any) => {
+  console.log(3)
+  const data = await axios.get("/api/userDates")
+
+  console.log(data)
+
+  if (data) {
+    dispatch({
+      type: AppActionTypes.SET_DATA_ARRAY,
+      payload: data,
+    })
+  } else {
+    dispatch({
+      type: AppActionTypes.LIST_USER_DATES_FAIL
+    })
+  }
+}
+
+export const postUserDates = (dateArray: any) => async (dispatch: any) => {
+  
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+
+  
+  const data = await axios.post("/api/userDates", dateArray, config)
+
+  if (data) {
+    console.log(data)
+  }
+}
+
+
 type AppActions = setCalculationsDisplayedAction | setDataArrayAction;
 
 export const appReducer: Reducer<AppReducerState, AppActions> = (
@@ -48,8 +87,9 @@ export const appReducer: Reducer<AppReducerState, AppActions> = (
     case AppActionTypes.SET_DATA_ARRAY:
       return {
         ...state,
-        dataArray: action.payload
-      }
+        dataArray: action.payload,
+        error: false
+      };
     default:
       return state;
   }

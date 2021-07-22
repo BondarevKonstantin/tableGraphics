@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCalculationsDisplayed, setDataArray } from '../../redux/ducks/app';
+import {
+  setCalculationsDisplayed,
+  setDataArray,
+  listUserDates,
+  postUserDates,
+} from '../../redux/ducks/app';
 import './Table.scss';
 
 import 'date-fns';
@@ -119,7 +124,12 @@ export const RetentionTable: React.FC = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TechButtons onCalc={handleCalc} disabled={tableRows.length === 1} />
+        <TechButtons
+          onCalc={handleCalc}
+          onGet={listUserDates}
+          onSave={() => postUserDates(tableRows)}
+          disabled={tableRows.length === 1}
+        />
       </MuiPickersUtilsProvider>
     </div>
   );
