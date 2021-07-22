@@ -38,15 +38,22 @@ export const setDataArray: ActionCreator<setDataArrayAction> = (payload: Retenti
 })
 
 export const listUserDates = () => async (dispatch: any) => {
-  console.log(3)
-  const data = await axios.get("/api/userDates")
+  const res = await axios.get("/api/userDates")
+  const { data } = res
 
-  console.log(data)
+  const responseResult = data.map((element: any) => {
+    const { registrationDate: strRegDate, lastActivityDate: strLastActDate } = element
 
-  if (data) {
+    const registrationDate = new Date(strRegDate)
+    const lastActivityDate = new Date(strLastActDate)
+
+    return { registrationDate, lastActivityDate }
+  })
+
+  if (responseResult) {
     dispatch({
       type: AppActionTypes.SET_DATA_ARRAY,
-      payload: data,
+      payload: responseResult,
     })
   } else {
     dispatch({

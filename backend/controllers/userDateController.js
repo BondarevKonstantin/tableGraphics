@@ -7,8 +7,6 @@ import UserDate from "../models/userDateModel.js"
 const getUserDates = asyncHandler(async (req, res) => {
   const userDates = await UserDate.find({})
 
-  console.log('getting')
-
   res.json(userDates)
 })
 

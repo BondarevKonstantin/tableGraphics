@@ -85,8 +85,8 @@ export const Results: React.FC = () => {
       </div>
 
       <div className="Results-info Results-life-gystogramm">
-        <ResponsiveContainer>
-          <BarChart width={700} height={300} data={lifeDurationData}>
+        <ResponsiveContainer width={700} height={300}>
+          <BarChart data={lifeDurationData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="lifeDays" />
             <YAxis />

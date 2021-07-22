@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setCalculationsDisplayed,
   setDataArray,
@@ -30,6 +30,8 @@ export const RetentionTable: React.FC = () => {
     { registrationDate: null, lastActivityDate: null },
   ]);
 
+  const { dataArray } = useSelector((state: AppState) => state.appReducer);
+
   const dispatch = useDispatch();
 
   const handleInputChange = (
@@ -45,6 +47,14 @@ export const RetentionTable: React.FC = () => {
   const handleCalc = () => {
     dispatch(setDataArray(tableRows.slice(0, -1)));
     dispatch(setCalculationsDisplayed(true));
+  };
+
+  const handleGettingDataFromDatabases = () => {
+    dispatch(listUserDates());
+  };
+
+  const handleSaveDataToDatabases = () => {
+    dispatch(postUserDates(tableRows.slice(0, -1)));
   };
 
   useEffect(() => {
@@ -64,6 +74,12 @@ export const RetentionTable: React.FC = () => {
       setTableRows([...tableRows, newField]);
     }
   }, [tableRows]);
+
+  useEffect(() => {
+    if (dataArray) {
+      setTableRows(dataArray);
+    }
+  }, [dataArray]);
 
   return (
     <div className="Table-container">
@@ -126,8 +142,8 @@ export const RetentionTable: React.FC = () => {
         </TableContainer>
         <TechButtons
           onCalc={handleCalc}
-          onGet={listUserDates}
-          onSave={() => postUserDates(tableRows)}
+          onGet={handleGettingDataFromDatabases}
+          onSave={handleSaveDataToDatabases}
           disabled={tableRows.length === 1}
         />
       </MuiPickersUtilsProvider>
